@@ -1,6 +1,8 @@
 package com.ciro.cursomc.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ciro.cursomc.domain.Categoria;
+import com.ciro.cursomc.domain.dto.CategoriaDTO;
 import com.ciro.cursomc.services.CategoriaService;
 
 @RestController
@@ -26,7 +29,16 @@ public class CategoriaResource {
 		Categoria obj =  service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {		
+		List<CategoriaDTO> list = new ArrayList<>();
+		for (Categoria c : service.findAll()) {
+			list.add(new CategoriaDTO(c));
+		}
+		return ResponseEntity.ok().body(list);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = service.insert(obj);
