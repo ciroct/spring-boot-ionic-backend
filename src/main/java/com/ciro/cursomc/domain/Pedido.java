@@ -112,6 +112,14 @@ public class Pedido implements Serializable {
 		this.itens = itens;
 	}
 
+	public double getValorTotal() {
+		double total = 0.0;
+		for (ItemPedido ip : itens) {
+			total += ip.getSubTotal();
+		}
+		return total;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
